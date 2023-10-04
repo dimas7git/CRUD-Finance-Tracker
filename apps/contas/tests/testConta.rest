@@ -1,0 +1,50 @@
+### teste de buscar todos as salas
+GET http://localhost:40000/getAllContas HTTP/1.1
+content-type: application/json
+
+{    
+    
+}
+
+### teste de buscar aluno por sala
+POST http://localhost:40000/getContasByID HTTP/1.1
+content-type: application/json
+//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlhdCI6MTY5MzM5NTA3MSwiZXhwIjoxNjkzMzk1NjcxfQ.wfg5FZ_XBCB36gg8eIX-NOEvRDexsFkwdQjkBAyTRFE
+
+{    
+    "id":1
+}
+
+### teste de inserção de sala
+POST http://localhost:40000/insertContas HTTP/1.1
+content-type: application/json
+//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlhdCI6MTY5MzM5NTA3MSwiZXhwIjoxNjkzMzk1NjcxfQ.wfg5FZ_XBCB36gg8eIX-NOEvRDexsFkwdQjkBAyTRFE
+
+{    
+      "cliente": "Dimas",
+      "valor": 1000.50,
+      "status": "Pendente",
+      "removido": false
+}
+
+### teste de atualização de sala
+POST http://localhost:40000/updateContas HTTP/1.1
+content-type: application/json
+//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlhdCI6MTY5MzM5NDMzNCwiZXhwIjoxNjkzMzk0OTM0fQ.h_Z43hGacEM-MMaW4OOWLEq3iu4MUtPbx_p3iUunRoo
+
+{    
+   "id": 1,
+   "cliente": "Sass",
+    "valor": 111111.50,
+      "status": "pago",
+      "removido": false
+}
+
+### teste de atualização de sala
+POST http://localhost:40000/deleteContas HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlhdCI6MTY5MTQ5MDg3NCwiZXhwIjoxNjkxNDkxNDc0fQ.1ABhMgWYm8gGKy7q90GOPQpNoY5M1LLzpCltKxFjcEo
+
+{    
+    "id": 1
+}
