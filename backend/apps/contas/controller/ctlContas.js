@@ -11,7 +11,7 @@ const getContasByID = (req, res) =>
 (async () =>{
     const contaID = parseInt(req.body.id);
     let registro = await mdlConta.getContasByID(contaID);
-    res.json({status: "ok", registro: registro});
+    res.json({ status: "ok", "registro": registro });
 })();
 
 const insertContas = (request, res) =>

@@ -65,7 +65,7 @@ const viewContas = async (req, res) => {
     if (req.method === "GET") {
       const id = req.params.id;
       const oper = req.params.oper;
-
+      console.log(id);
       parseInt(id);
       const resp = await axios.post(
         process.env.SERVIDOR_DW3 + "/getContaByID",

@@ -37,10 +37,10 @@
                             <tbody>
                                 @model.data.registro.forEach(function(registro){
                                 <tr>  
-                                    <td>@registro.nome</td>
+                                    <td>@registro.cliente</td>
                                     <td>@registro.valor</td>
                                     <td>@registro.status</td>
-                                    <td><a href="/contas/viewContas/@registro.contaid/v" class="btn btn-info btn-sm"><i
+                                    <td><a href="/contas/viewContas/@registro.id/v" class="btn btn-info btn-sm"><i
                                         class="fa fa-magnifying-glass"></i>Visualizar</a></td>
                                 </tr>
                                 })
@@ -74,14 +74,5 @@
     table.buttons().container()
         .appendTo($('.col-sm-12:eq(0)', table.table().container()));
 
-    // function visualizaAluno(idPar) {
-    //     alert("Novo aluno com parâmetro:" + idPar);
 
-    // }
-
-    // new $.fn.dataTable.Buttons(table, {
-    //     buttons: [
-    //         'copy', 'excel', 'pdf'
-    //     ]
-    // });
 </script>
