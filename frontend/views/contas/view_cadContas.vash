@@ -1,0 +1,153 @@
+@html.extend('layout', function(model){
+
+@html.block('content', function(model){
+
+
+<main>
+
+    <div class="container-fluid px-4">
+        <h1 class="mt-2">Registrar venda</h1>
+        <div class="row">
+            <div class="col-xl-12">
+
+                <div class="card-header">
+
+                </div>
+
+                <div class="card-body">
+                    <div class="col-xl-5">
+                        <form  id="form">
+                            <div class="mb-1" style="display: none">
+                                <input type="text" name="id" value="@model.data.cursoid" class="form-control" id="id">
+                            </div>
+
+                            <div class="mb-1">
+                                <label for="nome" class="form-label">Nome</label>
+                                <input type="text" name="nome" value="@model.data.nome" class="form-control" id="nome"
+                                    @(model.oper=='v' ? 'disabled' : '' )>
+                            </div>
+
+                            <div class="mb-1">
+                                <label for="valor" class="form-label">Valor</label>
+                                <input type="text" name="valor" value="@model.data.valor"
+                                    class="form-control" id="valor" data-thousands="." data-decimal=","
+                                    @(model.oper=='v' ? 'disabled' : '' )>
+                            </div>
+                            <div class="mb-1">
+                                <label for="" class="form-label">Status</label>
+                                <select class="form-select" aria-label="Default select example" id="status"
+                                    @(model.oper=='v' ? 'disabled' : '' ) name="status">
+                                    @model.curso.forEach(function(item){
+                                    @if(model.data.status === item.status) {
+                                    <option value="@item.status" selected>@item.status</option>
+                                    } else {
+                                    <option value="@item.status">@item.status</option>
+                                    }
+                                    });
+                                </select>
+                            </div>
+
+
+                            @if (model.oper=="c") {
+                            <button type="submit" class="btn btn-success me-2" onclick=""
+                                formmethod="POST">Salvar</button>
+                            }
+
+                        </form>
+                        <div>
+                            @if (model.oper=="vu") {
+                            <button type="button" class="btn btn-warning me-2 mb-3" onclick="alteraRegistro()">Salvar
+                                Alteração</button>
+                            }
+
+                            @if (model.oper=="v") {
+                            <button type="button" class="btn btn-warning me-2 mb-3"
+                                onclick="window.open('/cursos/viewCursos/' + $('#id').val() + '/vu', '_self')">Alterar</button>
+                            }
+
+                            @if (model.oper=="v") {
+                            <button type="" class="btn btn-danger mb-3" onclick="deleteCursos()">Remover</button>
+                            }
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="window.location.href = '/cursos'">Fechar
+                            sem salvar</button>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+})
+
+})
+
+<script>
+
+    $(function () {
+        $('#rendafamiliar').maskMoney();
+    })
+
+    $('#form').on('submit', function () {
+        if ($('#datanascimento').val() == "") {
+            // $('#errormessage').html("Please provide at least an email ");
+            alert("Informe a data de nascimento");
+            return false;
+        } else {
+            $('#rendafamiliar').val($('#rendafamiliar').maskMoney('unmasked')[0]);
+            return true;
+        }
+    });
+
+    async function alteraRegistro() {
+        // event.preventDefault();        
+        resp = await axios.post("/cursos/viewContas", {
+            id: $("#id").val(),
+            prontuario: $("#prontuario").val(),
+            nome: $("#nome").val(),
+            endereco: $("#endereco").val(),
+            rendafamiliar: $('#rendafamiliar').maskMoney('unmasked')[0], //Retira a formatação de money
+            datanascimento: $("#datanascimento").val(),
+            status: $("#status").val(),
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        //console.log("[view_cadContas.vash|alteraRegistro] valor resp:", resp.data.status);
+        if (resp.data.status == "ok") {
+            alert("Conta alterado com sucesso!");
+        } else {
+            alert("Houve erro ao alterar os dados dos contas!");
+        }
+    }
+
+    async function deleteContas(prontuarioPar) {
+        resp = await axios.post("/contas/DeleteContas", {
+            id: $("#id").val(),
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if (resp.data.status == "ok") {
+            alert("Conta removido com sucesso!");
+            window.open("/contas", "_self");
+        } else {
+            alert("Houve erro ao remover os dados dos contas!");
+        }
+    }
+
+    async function testeFormData() {
+        const form = document.getElementById("form");
+        const formData = new FormData(form);          
+
+        // for (const [key, value] of formData) {
+        //     console.log("Valores:" + `${key}: ${value}`);
+        // }
+
+        console.log("Prontuario: ", formData.get("prontuario")); 
+    }
+</script>

@@ -1,0 +1,87 @@
+@html.extend('layout', function(model){
+
+@html.block('content', function(model){
+
+
+<main>
+
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">@model.title</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">@model.title</li>
+        </ol>
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card mb-4">
+                    <div class="col-2 ms-1 mt-1 mb-2">
+
+                        <button type="button" class="btn btn-primary"
+                            onclick="window.location.href = '/contas/insertContas'">Cadastrar pendência</button>
+                    </div>
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        Listagem de contas
+                    </div>
+
+
+                    <div class="card-body">
+                        <table id="example" class="stripe" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>                                    
+                                    <th>Valor</th>
+                                    <th>Status</th>
+                                    <th>Consultar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @model.data.registro.forEach(function(registro){
+                                <tr>  
+                                    <td>@registro.nome</td>
+                                    <td>@registro.valor</td>
+                                    <td>@registro.status</td>
+                                    <td><a href="/contas/viewContas/@registro.contaid/v" class="btn btn-info btn-sm"><i
+                                        class="fa fa-magnifying-glass"></i>Visualizar</a></td>
+                                </tr>
+                                })
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+})
+
+})
+
+<script>
+    var table = new DataTable('#example', {
+        dom: 'B<"top"fi>rt<"bottom"lp><"clear">',
+        columnDefs: [
+            {
+                targets: 3,
+                render: DataTable.render.datetime('DD/MM/YYYY')
+            }
+        ],
+        buttons: [
+            'copy', 'csv', 'pdf'
+        ],
+    });
+
+    table.buttons().container()
+        .appendTo($('.col-sm-12:eq(0)', table.table().container()));
+
+    // function visualizaAluno(idPar) {
+    //     alert("Novo aluno com parâmetro:" + idPar);
+
+    // }
+
+    // new $.fn.dataTable.Buttons(table, {
+    //     buttons: [
+    //         'copy', 'excel', 'pdf'
+    //     ]
+    // });
+</script>

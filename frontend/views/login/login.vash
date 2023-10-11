@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+@html.include("header")
+
+<body>
+    <div class="login ">
+        <div class="card mx-auto col-lg-4 mt-5" style="background-color:lightblue;">
+            <div class="card mx-auto col-10  mt-5 mb-5">
+                <div class="card-body">
+                    <h4 class="card-title" style="text-align: center;">Login</h4>
+                    <form class="form-login" action="Login" method="POST">
+                        <label for="labelusername" class="form-label mt-4">Informe seu usuário</label>
+                        <input type="text" name="username" class="form-control" /><br />
+                        <label for="labelpassword" class="form-label mt-2">Informe seu password</label>
+                        <input type="password" name="password" class="form-control" /><br />
+                        <div class="text-center">
+                            <input class="btn btn-primary mt-4 mx-auto" type="submit" value="Login" />
+                        </div>
+
+                        @if(model.message) {
+                        <p>
+                            <label style="color:Red"> @model.message </label>
+                        </p>
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="js/5.3.0/bootstrap.min.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
