@@ -1,0 +1,69 @@
+@html.extend('layout', function(model){ @html.block('content', function(model){
+
+    <main>
+      <div class="container-fluid px-4">
+        <h1 class="mt-2">@model.title</h1>
+        <ol class="breadcrumb mb-2">
+          <li class="breadcrumb-item active">@model.title</li>
+        </ol>
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="card-header"></div>
+    
+            <div class="card-body">
+              <div class="col-sm-6 col-xxl-12">
+                <form id="form">
+                  <div class="mb-1" style="display: none">
+                    <input type="number" name="cursoid" class="form-control" id="cursoid" />
+                  </div>
+                  <div class="mb-1 row ">
+                    <label for="codigo" class="col-sm-2 col-xxl-1 col-form-label required">Código:</label>
+                    <div class="col-sm-4 col-xxl-2">
+                      <input type="text" name="codigo" class="form-control-plaintext" id="codigo" maxlength="10" required readonly />
+                    </div>
+    
+                    <label for="descricao" class="col-sm-2 col-xxl-1 col-form-label required">Descrição:</label>
+                    <div class="col-sm-4 col-xxl-3">
+                      <input type="text" name="descricao" class="form-control-plaintext" id="descricao" maxlength="50" required readonly />
+                    </div>
+                  </div>
+    
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="ativo" id="ativo" checked disabled />
+                    <label class="form-check-label" for="ativo"> ativo </label>
+                  </div>
+                </form>
+              </div>
+              <div class="">
+                <button type="button" class="btn btn-success me-2" onclick="btnSalvar()" id="btnSalvar" hidden>
+                  Salvar
+                </button>
+    
+                <button type="button" class="btn btn-warning me-2" onclick="btnAlterar()" id="btnAlterar" hidden>
+                  Alterar
+                </button>
+    
+                <button type="button" class="btn btn-warning me-2" onclick="btnSalvarAlteracao()" id="btnSalvarAlteracao" hidden>
+                  Salvar Alteração
+                </button>
+    
+                <button type="button" class="btn btn-info me-2" onclick="btnCancelarAlteracao()" id="btnCancelarAlteracao" hidden>
+                  Cancelar Alteração
+                </button>
+    
+                <button type="" class="btn btn-danger" onclick="btnRemover()" id="btnRemover" hidden>
+                  Remover
+                </button>
+    
+                <button type="button" class="btn btn-primary" onclick="window.location.href = '/contas'" id="btnFechar">
+                  Fechar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    }) })
+    

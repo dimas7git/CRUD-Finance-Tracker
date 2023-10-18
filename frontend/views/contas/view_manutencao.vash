@@ -16,7 +16,7 @@
                     <div class="col-2 ms-1 mt-1 mb-2">
 
                         <button type="button" class="btn btn-primary"
-                            onclick="window.location.href = '/contas/insertContas'">Cadastrar pendência</button>
+                            onclick="window.location.href = '/contas/openContasInsert'">Cadastrar pendência</button>
                     </div>
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>
@@ -40,7 +40,7 @@
                                     <td>@registro.cliente</td>
                                     <td>@registro.valor</td>
                                     <td>@registro.status</td>
-                                    <td><a href="/contas/viewContas/@registro.id/v" class="btn btn-info btn-sm"><i
+                                    <td><a href="/contas/openContasUpdate/@registro.id" class="btn btn-info btn-sm"><i
                                         class="fa fa-magnifying-glass"></i>Visualizar</a></td>
                                 </tr>
                                 })

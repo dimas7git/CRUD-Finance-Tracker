@@ -20,13 +20,14 @@ function authenticationMiddleware(req, res, next) {
   
 /* GET métodos */
 router.get('/', authenticationMiddleware, contasApp.getAllContas);
-router.get('/insertContas', authenticationMiddleware, contasApp.insertContas);
-router.get('/viewContas/:id/:oper', authenticationMiddleware, contasApp.viewContas);
+router.get('/openContasInsert', authenticationMiddleware, contasApp.openContasInsert);
+router.get('/openContasUpdate/:id', authenticationMiddleware, contasApp.openContasUpdate);
 
 /* POST métodos */
 router.post('/insertContas', authenticationMiddleware, contasApp.insertContas);
+router.post('/getDados', authenticationMiddleware, contasApp.getDados);
 router.post('/deleteContas', authenticationMiddleware, contasApp.deleteContas);
-router.post('/viewContas', authenticationMiddleware, contasApp.viewContas);
+router.post('/updateContas', authenticationMiddleware, contasApp.updateContas);
 
 
 module.exports = router;

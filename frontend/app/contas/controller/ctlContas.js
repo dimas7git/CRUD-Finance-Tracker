@@ -1,140 +1,221 @@
 const axios = require("axios");
 
-// Abre a página de listagem de contas
-const getAllContas = async (req, res) => {
-  try {
-    const resp = await axios.get(process.env.SERVIDOR_DW3 + "/getAllContas", {});
-    res.render("contas/view_manutencao", {
-      title: "Listagem de Contas",
-      data: resp.data,
-    });
-  } catch (erro) {
-    console.log("[ctlContas.js|getAllContas] Try Catch: Erro de requisição", erro);
-  }
-};
+//@ Abre o formulário de manutenção de contas
+const getAllContas = (req, res) =>
+  (async () => {
+    userName = req.session.userName;
+    try {
+      resp = await axios.get(process.env.SERVIDOR_DW3 + "/GetAllContas", {});
+      //console.log("[ctlLogin.js] Valor resp:", resp.data);
+      res.render("contas/view_manutencao", {
+        title: "Manutenção de contas",
+        data: resp.data,
+        userName: userName,
+      });
+    } catch (erro) {
+      console.log("[ctlCursos.js|getAllCursos] Try Catch: Erro de requisição");
+    }
+  })();
 
-// Função para validar campos no formulário
-function validateForm(contaForm) {
-  // Validar campos se necessário
-  return contaForm;
+//@ Abre formulário de cadastro de contas
+const openContasInsert = (req, res) =>
+  (async () => {
+    var oper = "";
+    userName = req.session.userName;
+    token = req.session.token;
+    try {
+      if (req.method == "GET") {
+        oper = "c";
+        res.render("contas/view_cadContas", {
+          title: "Cadastro de contas",
+          oper: oper,
+          userName: userName,
+        });
+      }
+    } catch (erro) {
+      console.log(
+        "[ctlAlunos.js|insertAlunos] Try Catch: Erro não identificado",
+        erro
+      );
+    }
+  })();
+
+//@ Função para validar campos no formulário
+function validateForm(regFormPar) {
+  if (regFormPar.id == "") {
+    regFormPar.id = 0;
+  } else {
+    regFormPar.id = parseInt(regFormPar.id);
+  }
+
+  regFormPar.ativo = regFormPar.ativo === "true"; //converte para true ou false um check componet
+  regFormPar.deleted = regFormPar.deleted === "true"; //converte para true ou false um check componet
+
+  return regFormPar;
 }
 
-// Abre o formulário de cadastro de contas
-const insertContas = async (req, res) => {
-  try {
-    if (req.method === "GET") {
-      const registro = {
-        cliente: "",
-        valor: "0.00",
-        status: "",
-        removido: false,
-      };
-      res.render("contas/view_cadContas", {
-        title: "Cadastro de Contas",
-        data: registro,
-      });
-    } else {
-      const contaREG = validateForm(req.body);
-      const resp = await axios.post(
-        process.env.SERVIDOR_DW3 + "/insertContas",
-        {
-          cliente: contaREG.cliente,
-          valor: contaREG.valor,
-          status: contaREG.status,
-          removido: false,
-        }
-      );
-
-      if (resp.data.status === "ok") {
-        res.redirect("/contas");
-      } else {
-        res.render("contas/view_cadContas", {
-          title: "Cadastro de Contas",
-          data: contaREG,
-        });
-      }
-    }
-  } catch (erro) {
-    console.log("[ctlContas.js|insertContas] Try Catch: Erro não identificado", erro);
-  }
-};
-
-// Abre o formulário de edição de contas
-const viewContas = async (req, res) => {
-  try {
-    if (req.method === "GET") {
-      const id = req.params.id;
-      const oper = req.params.oper;
-      console.log(id);
-      parseInt(id);
-      const resp = await axios.post(
-        process.env.SERVIDOR_DW3 + "/getContaByID",
-        {
-          id: id,
-        }
-      );
-
-      if (resp.data.status === "ok") {
-        const registro = resp.data.registro[0];
-        res.render("contas/view_cadContas", {
-          title: "Edição de Conta",
-          data: registro,
+//@ Abre formulário de cadastro de contas
+const openContasUpdate = (req, res) =>
+  (async () => {
+    var oper = "";
+    userName = req.session.userName;
+    token = req.session.token;
+    try {
+      if (req.method == "GET") {
+        oper = "u";
+        const id = req.params.id;
+        parseInt(id);
+        res.render("contas/viewContas", {
+          title: "Cadastro de contas",
           oper: oper,
+          idBusca: id,
+          userName: userName,
         });
       }
-    } else {
-      const contaREG = validateForm(req.body);
-      const id = parseInt(contaREG.id);
-      const resp = await axios.post(
-        process.env.SERVIDOR_DW3 + "/updateContas",
+    } catch (erro) {
+      console.log(
+        "[ctlAlunos.js|insertAlunos] Try Catch: Erro não identificado",
+        erro
+      );
+    }
+  })();
+
+//@ Recupera os dados das contas
+const getDados = (req, res) =>
+  (async () => {
+    const idBusca = req.body.idBusca;
+    parseInt(idBusca);
+    console.log("[ctlCursos.js|getDados] valor id :", idBusca);
+    try {
+      resp = await axios.post(
+        process.env.SERVIDOR_DW3 + "/GetContaByID",
         {
-          id: id,
-          cliente: contaREG.cliente,
-          valor: contaREG.valor,
-          status: contaREG.status,
-          removido: false,
+          id: idBusca,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
         }
       );
-
-      if (resp.data.status === "ok") {
-        res.redirect("/contas");
-      } else {
-        res.render("contas/view_cadContas", {
-          title: "Edição de Conta",
-          data: contaREG,
-          oper: "edit",
-        });
+      if (resp.data.status == "ok") {
+        res.json({ status: "ok", registro: resp.data.registro[0] });
       }
+    } catch (error) {
+      console.log(
+        "[ctlCursos.js|getDados] Try Catch: Erro não identificado",
+        erro
+      );
     }
-  } catch (erro) {
-    console.log("[ctlContas.js|editContas] Try Catch: Erro não identificado", erro);
-  }
-};
+  })();
 
-// Exclui uma conta
-const deleteContas = async (req, res) => {
-  try {
-    const id = parseInt(req.body.id);
-    const resp = await axios.post(
-      process.env.SERVIDOR_DW3 + "/deleteContas",
-      {
-        id: id,
+//@ Realiza inserção de contas
+const insertContas = (req, res) =>
+  (async () => {
+    token = req.session.token;
+    try {
+      if (req.method == "POST") {
+        const regPost = validateForm(req.body);
+        regPost.id = 0;
+        const resp = await axios.post(
+          process.env.SERVIDOR_DW3 + "/InsertContas",
+          regPost,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+
+        if (resp.data.status == "ok") {
+          res.json({ status: "ok", mensagem: "Conta inserida com sucesso!" });
+        } else {
+          res.json({ status: "erro", mensagem: "Erro ao inserir conta!" });
+        }
       }
-    );
-
-    if (resp.data.status === "ok") {
-      res.redirect("/contas");
-    } else {
-      res.redirect("/contas");
+    } catch (erro) {
+      console.log(
+        "[ctlContas.js|insertContas] Try Catch: Erro não identificado",
+        erro
+      );
     }
-  } catch (erro) {
-    console.log("[ctlContas.js|deleteContas] Try Catch: Erro não identificado", erro);
-  }
-};
+  })();
+
+//@ Realiza atualização de contas
+const updateContas = (req, res) =>
+  (async () => {
+    token = req.session.token;
+    try {
+      if (req.method == "POST") {
+        const regPost = validateForm(req.body);
+        const resp = await axios.post(
+          process.env.SERVIDOR_DW3 + "/UpdateContas",
+          regPost,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+
+        if (resp.data.status == "ok") {
+          res.json({ status: "ok", mensagem: "Conta atualizada com sucesso!" });
+        } else {
+          res.json({ status: "erro", mensagem: "Erro ao atualizar conta!" });
+        }
+      }
+    } catch (erro) {
+      console.log(
+        "[ctlAlunos.js|updateCursos] Try Catch: Erro não identificado.",
+        erro
+      );
+    }
+  })();
+
+//@ Realiza remoção soft de contas
+const deleteContas = (req, res) =>
+  (async () => {
+    token = req.session.token;
+    try {
+      if (req.method == "POST") {
+        const regPost = validateForm(req.body);
+        regPost.id = parseInt(regPost.id);
+        const resp = await axios.post(
+          process.env.SERVIDOR_DW3 + "/DeleteContas",
+          {
+            id: regPost.id,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+
+        if (resp.data.status == "ok") {
+          res.json({ status: "ok", mensagem: "Conta removida com sucesso!" });
+        } else {
+          res.json({ status: "erro", mensagem: "Erro ao remover conta!" });
+        }
+      }
+    } catch (erro) {
+      console.log(
+        "[ctlAlunos.js|deleteCursos] Try Catch: Erro não identificado",
+        erro
+      );
+    }
+  })();
 
 module.exports = {
   getAllContas,
+  openContasInsert,
+  openContasUpdate,
+  getDados,
   insertContas,
-  viewContas,
+  updateContas,
   deleteContas,
 };
