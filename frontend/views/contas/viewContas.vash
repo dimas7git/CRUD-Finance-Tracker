@@ -1,69 +1,323 @@
 @html.extend('layout', function(model){ @html.block('content', function(model){
 
-    <main>
-      <div class="container-fluid px-4">
-        <h1 class="mt-2">@model.title</h1>
-        <ol class="breadcrumb mb-2">
-          <li class="breadcrumb-item active">@model.title</li>
-        </ol>
-        <div class="row">
-          <div class="col-xl-12">
-            <div class="card-header"></div>
-    
-            <div class="card-body">
-              <div class="col-sm-6 col-xxl-12">
-                <form id="form">
-                  <div class="mb-1" style="display: none">
-                    <input type="number" name="cursoid" class="form-control" id="cursoid" />
+  <main>
+    <div class="container-fluid px-4">
+      <h1 class="mt-2">@model.title</h1>
+      <ol class="breadcrumb mb-2">
+        <li class="breadcrumb-item active">@model.title</li>
+      </ol>
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="card-header"></div>
+  
+          <div class="card-body">
+            <div class="col-sm-6 col-xxl-12">
+              <form id="form">
+                <div class="mb-1" style="display: none">
+                  <input type="number" name="id" class="form-control" id="id" value="@model.id" />
+                </div>
+                <div class="mb-1 row">
+                  <label for="cliente" class="col-sm-2 col-xxl-1 col-form-label required">Cliente:</label>
+                  <div class="col-sm-4 col-xxl-2">
+                    <input type="text" name="cliente" class="form-control-plaintext" id="cliente" maxlength="10" required value="@model.cliente" readonly />
                   </div>
-                  <div class="mb-1 row ">
-                    <label for="codigo" class="col-sm-2 col-xxl-1 col-form-label required">Código:</label>
-                    <div class="col-sm-4 col-xxl-2">
-                      <input type="text" name="codigo" class="form-control-plaintext" id="codigo" maxlength="10" required readonly />
-                    </div>
-    
-                    <label for="descricao" class="col-sm-2 col-xxl-1 col-form-label required">Descrição:</label>
-                    <div class="col-sm-4 col-xxl-3">
-                      <input type="text" name="descricao" class="form-control-plaintext" id="descricao" maxlength="50" required readonly />
-                    </div>
+  
+                  <label for="valor" class="col-sm-2 col-xxl-1 col-form-label required">Valor:</label>
+                  <div class="col-sm-4 col-xxl-3">
+                    <input type="number" name="valor" class="form-control-plaintext" id="valor" maxlength="10" required value="@model.valor" readonly />
                   </div>
-    
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="ativo" id="ativo" checked disabled />
-                    <label class="form-check-label" for="ativo"> ativo </label>
+  
+                  <label for="status" class="col-sm-2 col-xxl-1 col-form-label required">Situação:</label>
+                  <div class="col-sm-4 col-xxl-3">
+                    <select class="form-select" aria-label="Default select example" id="select">
+                      <option value="ativo" @(model.data && model.data.status === 'ativo' ? 'selected' : '')>Ativo</option>
+                      <option value="pendente" @(model.data && model.data.status === 'pendente' ? 'selected' : '')>Pendente</option>
+                      <option value="inativo" @(model.data && model.data.status === 'inativo' ? 'selected' : '')>Inativo</option>
+                    </select>
                   </div>
-                </form>
-              </div>
-              <div class="">
-                <button type="button" class="btn btn-success me-2" onclick="btnSalvar()" id="btnSalvar" hidden>
-                  Salvar
-                </button>
-    
-                <button type="button" class="btn btn-warning me-2" onclick="btnAlterar()" id="btnAlterar" hidden>
-                  Alterar
-                </button>
-    
-                <button type="button" class="btn btn-warning me-2" onclick="btnSalvarAlteracao()" id="btnSalvarAlteracao" hidden>
-                  Salvar Alteração
-                </button>
-    
-                <button type="button" class="btn btn-info me-2" onclick="btnCancelarAlteracao()" id="btnCancelarAlteracao" hidden>
-                  Cancelar Alteração
-                </button>
-    
-                <button type="" class="btn btn-danger" onclick="btnRemover()" id="btnRemover" hidden>
-                  Remover
-                </button>
-    
-                <button type="button" class="btn btn-primary" onclick="window.location.href = '/contas'" id="btnFechar">
-                  Fechar
-                </button>
-              </div>
+                  
+                </div>
+              </form>
+            </div>
+            <div>
+              <button type="button" class="btn btn-success me-2" onclick="btnSalvar()" id="btnSalvar" hidden>
+                Salvar
+              </button>
+  
+              <button type="button" class="btn btn-warning me-2" onclick="btnAlterar()" id="btnAlterar" hidden>
+                Alterar
+              </button>
+  
+              <button type="button" class="btn btn-warning me-2" onclick="btnSalvarAlteracao()" id="btnSalvarAlteracao" hidden>
+                Salvar Alteração
+              </button>
+  
+              <button type="button" class="btn btn-info me-2" onclick="btnCancelarAlteracao()" id="btnCancelarAlteracao" hidden>
+                Cancelar Alteração
+              </button>
+  
+              <button type="button" class="btn btn-danger" onclick="btnRemover()" id="btnRemover" hidden>
+                Remover
+              </button>
+  
+              <button type="button" class="btn btn-primary" onclick="window.location.href = '/contas'" id="btnFechar">
+                Fechar
+              </button>
             </div>
           </div>
         </div>
       </div>
-    </main>
-    
-    }) })
-    
+    </div>
+  </main>
+  
+
+}) })
+
+<script>
+  const form = document.getElementById("form");
+  var oper = "@model.oper";
+
+  window.onload = limpaForm();
+
+  //@ Limpa o conteúdo dos campos do formulário
+  async function limpaForm() {
+
+    $("#form").each(function() {
+      this.reset();
+    });
+
+    // Mostra os botões de acordo com o tipo da operação
+    if (oper == "c") {
+      $("#btnSalvar").prop("hidden", false);
+      habilitaForm();
+    }
+
+    if (oper == "u") {
+      $("#btnAlterar").prop("hidden", false);
+    }
+
+    //Necessário para buscar dados de acordo com o ID para serem alterados
+    if (oper == "u") {
+      idBusca = "@model.idBusca";
+      await getDados(idBusca);
+    }
+
+    //Coloca o curso no primeiro campo do formulário
+    $("#codigo").focus();
+  }
+
+  //@ Busca os dados de acordo com o ID para serem alterados
+  // async function getDados(idBuscaPar) {
+  //   console.log("[getDados] idBusca", idBuscaPar);
+
+  //   try {
+  //     const resp = await axios.post(
+  //       "/contas/getDados", {
+  //         idBusca: idBuscaPar
+  //       }, {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     if (resp.data.status == "ok") {
+  //       $("#id").val(resp.data.registro.id);
+  //       $("#codigo").val(resp.data.registro.codigo);
+  //       $("#descricao").val(resp.data.registro.descricao);
+  //       if (resp.data.registro.ativo) {
+  //         $("#ativo").prop("checked", true);
+  //       } else {
+  //         $("#ativo").prop("checked", false);
+  //       }
+
+  //     } else {
+  //       alert("Houve erro ao buscar os dados dos alunos!");
+  //     }
+  //   } catch (error) {
+  //     alert("[view_cadCursos|getDados]Ocorreu um erro inesperado!" + error);
+  //   }
+  // }
+
+  //@ Valida o formulário antes de salvá-lo
+  function validaForm(formDataPar) {
+    var validado = true;
+    $("#form input, #form select").each(function(index) {
+      var input = $(this);
+      if (
+        input.attr("type") == "text" &&
+        input.prop("required") &&
+        String(input.val()).length == 0
+      ) {
+        alert("Campo obrigatório");
+        //console.log('Type: ' + input.attr('type') + ' ID: ' + input.attr('id') + ' Name: ' + input.attr('name') + ' Value: ' + input.val() + ' Obrigatori: ' + input.prop("required"));
+        $(input).focus();
+        validado = false;
+        return false;
+      }
+    });
+
+    if (formDataPar.get("ativo") == "on") {
+      formDataPar.set("ativo", true);
+    } else {
+      formDataPar.set("ativo", false);
+    }
+    formDataPar.set("deleted", false);
+
+    return validado;
+  }
+
+  //@ Salva os dados
+  async function btnSalvar() {
+    const formData = new FormData(form);
+
+    const validado = validaForm(formData);
+    if (!validado) {
+      return;
+    }
+
+    try {
+      resp = await axios.post("/contas/insertContas", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (resp.data.status == "ok") {
+        alert(resp.data.mensagem);
+        limpaForm();
+      } else {
+        alert("Houve um erro: " + resp.data.mensagem);
+      }
+    } catch (error) {
+      alert("[view_cadCursos|btnSalvar]Ocorreu um erro inesperado!" + error);
+    }
+  }
+
+  //@ Habilita form para alteração
+  function habilitaForm() {
+    $("#codigo").prop("class", "form-control");
+    $("#codigo").prop("readonly", false);
+
+    $("#descricao").prop("class", "form-control");
+    $("#descricao").prop("readonly", false);
+
+    $("#ativo").prop("disabled", false);
+  }
+
+  //@ Habilita a alteração
+  async function btnAlterar() {
+    $("#btnSalvarAlteracao").prop("hidden", false);
+    $("#btnCancelarAlteracao").prop("hidden", false);
+    $("#btnRemover").prop("hidden", false);
+    $("#btnAlterar").prop("hidden", true);
+
+    habilitaForm();
+  }
+
+  //@ Salva a alteração
+  //@ console.log("[view_cadCursos|btnSalvarAlteracao] :", )
+  async function btnSalvarAlteracao() {
+    const formData = new FormData(form);
+    const validado = validaForm(formData);
+    if (!validado) {
+      return;
+    }
+
+    try {
+      resp = await axios.post("/contas/updateContas", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (resp.data.status == "ok") {
+        alert(resp.data.mensagem);
+        window.open("/contas/openContasUpdate/" + String($("#id").val()), "_self");
+      } else {
+        alert("Houve um erro: " + resp.data.mensagem);
+      }
+    } catch (error) {
+      alert("[view_cadCursos|btnSalvarAlteracao]Ocorreu um erro inesperado!" + error);
+    }
+
+
+  }
+
+  //@ Cancela a alteração
+  //@ console.log("[view_cadCursos|btnCancelarAlteracao] Valor do id", $("#id").val());    
+  async function btnCancelarAlteracao() {
+    window.open("/contas/openContasUpdate/" + String($("#id").val()), "_self");
+  }
+
+  //@ Remove curso
+  //@ console.log("[view_cadCursos|btnSalvarAlteracao] :", )
+  async function btnRemover() { 
+
+    var confirma = confirm("Deseja realmente remover o registro?");
+    if (!confirma) {
+      return; //@ Se o usuário selecionar Cancela, o registro não é removido.
+    }
+    const formData = new FormData(form);
+
+    try {
+      resp = await axios.post("/contas/deleteContas", {
+        id: formData.get("id")
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (resp.data.status == "ok") {
+        alert(resp.data.mensagem);
+        window.open("/contas", "_self");
+      } else {
+        alert("Houve um erro: " + resp.data.mensagem);
+      }
+    } catch (error) {
+      alert("[view_cadCursos|btnSalvarAlteracao]Ocorreu um erro inesperado!" + error);
+    }
+  }
+
+
+  $(function() {
+    $("#rendafamiliar").maskMoney();
+  });
+
+  async function deleteContas(prontuarioPar) {
+    resp = await axios.post(
+      "/alunos/DeleteContas", {
+        id: $("#id").val(),
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (resp.data.status == "ok") {
+      alert("Aluno removido com sucesso!");
+      window.open("/alunos", "_self");
+    } else {
+      alert("Houve erro ao remover os dados dos Contas!");
+    }
+  }
+
+  async function testeFormData() {
+    const form = document.getElementById("form");
+    const formData = new FormData(form);
+
+    // for (const [key, value] of formData) {
+    //     console.log("Valores:" + `${key}: ${value}`);
+    // }
+
+    console.log("Prontuario: ", formData.get("prontuario"));
+  }
+</script>
+
+<style>
+  .required:after {
+    content: " *";
+    color: red;
+  }
+</style>

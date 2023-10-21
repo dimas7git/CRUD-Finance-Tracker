@@ -14,25 +14,32 @@
           <div class="col-sm-6 col-xxl-12">
             <form id="form">
               <div class="mb-1" style="display: none">
-                <input type="number" name="cursoid" class="form-control" id="cursoid" />
+                <input type="number" name="id" class="form-control" id="id" />
               </div>
               <div class="mb-1 row ">
-                <label for="codigo" class="col-sm-2 col-xxl-1 col-form-label required">Código:</label>
+                <label for="cliente" class="col-sm-2 col-xxl-1 col-form-label required">Cliente:</label>
                 <div class="col-sm-4 col-xxl-2">
-                  <input type="text" name="codigo" class="form-control-plaintext" id="codigo" maxlength="10" required readonly />
+                  <input type="text" name="cliente" class="form-control-plaintext" id="cliente" maxlength="10" required readonly />
                 </div>
 
-                <label for="descricao" class="col-sm-2 col-xxl-1 col-form-label required">Descrição:</label>
+                <label for="valor" class="col-sm-2 col-xxl-1 col-form-label required">Valor:</label>
                 <div class="col-sm-4 col-xxl-3">
-                  <input type="text" name="descricao" class="form-control-plaintext" id="descricao" maxlength="50" required readonly />
+                  <input type="number" name="valor" class="form-control-plaintext" id="valor" maxlength="10" required readonly />
                 </div>
+                <label for="status" class="col-sm-2 col-xxl-1 col-form-label required" >Situação: </label>
+                <div class="col-sm-4 col-xxl-3">
+                  
+                  <select class="form-select" aria-label="Default select example" id="select">
+                      <option value="ativo" selected>Ativo</option>
+                      <option value="pendente">Pendente</option>
+                      <option value="inativo">Inativo</option>
+                  </select>
+                </div>
+                
               </div>
 
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="ativo" id="ativo" checked disabled />
-                <label class="form-check-label" for="ativo"> ativo </label>
-              </div>
             </form>
+            
           </div>
           <div class="">
             <button type="button" class="btn btn-success me-2" onclick="btnSalvar()" id="btnSalvar" hidden>
@@ -97,7 +104,7 @@
     }
 
     //Coloca o curso no primeiro campo do formulário
-    $("#codigo").focus();
+    $("#cliente").focus();
   }
 
   //@ Busca os dados de acordo com o ID para serem alterados
@@ -116,13 +123,9 @@
       );
       if (resp.data.status == "ok") {
         $("#id").val(resp.data.registro.id);
-        $("#codigo").val(resp.data.registro.codigo);
+        $("#cliente").val(resp.data.registro.cliente);
         $("#valor").val(resp.data.registro.valor);
-        if (resp.data.registro.ativo) {
-          $("#ativo").prop("checked", true);
-        } else {
-          $("#ativo").prop("checked", false);
-        }
+        
 
       } else {
         alert("Houve erro ao buscar os dados dos contas!");
@@ -150,10 +153,10 @@
       }
     });
 
-    if (formDataPar.get("ativo") == "on") {
-      formDataPar.set("ativo", true);
+    if (formDataPar.get("status") == "on") {
+      formDataPar.set("status", true);
     } else {
-      formDataPar.set("ativo", false);
+      formDataPar.set("status", false);
     }
     formDataPar.set("deleted", false);
 
@@ -168,7 +171,6 @@
     if (!validado) {
       return;
     }
-
     try {
       resp = await axios.post("/contas/insertContas", formData, {
         headers: {
@@ -189,13 +191,13 @@
 
   //@ Habilita form para alteração
   function habilitaForm() {
-    $("#codigo").prop("class", "form-control");
-    $("#codigo").prop("readonly", false);
+    $("#cliente").prop("class", "form-control");
+    $("#cliente").prop("readonly", false);
 
-    $("#descricao").prop("class", "form-control");
-    $("#descricao").prop("readonly", false);
+    $("#valor").prop("class", "form-control");
+    $("#valor").prop("readonly", false);
 
-    $("#ativo").prop("disabled", false);
+    $("#status").prop("disabled", false);
   }
 
   //@ Habilita a alteração
@@ -238,7 +240,7 @@
   }
 
   //@ Cancela a alteração
-  //@ console.log("[view_cadContas|btnCancelarAlteracao] Valor do id", $("#cursoid").val());    
+  //@ console.log("[view_cadContas|btnCancelarAlteracao] Valor do id", $("#id").val());    
   async function btnCancelarAlteracao() {
     window.open("/contas/openContasUpdate/" + String($("#id").val()), "_self");
   }
@@ -255,7 +257,7 @@
 
     try {
       resp = await axios.post("/contas/deleteContas", {
-        cursoid: formData.get("cursoid")
+        id: formData.get("id")
       }, {
         headers: {
           "Content-Type": "application/json",

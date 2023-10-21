@@ -24,6 +24,8 @@ router.get('/openContasInsert', authenticationMiddleware, contasApp.openContasIn
 router.get('/openContasUpdate/:id', authenticationMiddleware, contasApp.openContasUpdate);
 
 /* POST métodos */
+router.post('/openContasInsert', authenticationMiddleware, contasApp.openContasInsert);
+
 router.post('/insertContas', authenticationMiddleware, contasApp.insertContas);
 router.post('/getDados', authenticationMiddleware, contasApp.getDados);
 router.post('/deleteContas', authenticationMiddleware, contasApp.deleteContas);
