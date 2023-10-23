@@ -2,7 +2,7 @@
 
   <main>
     <div class="container-fluid px-4">
-      <h1 class="mt-2">@model.title</h1>
+      <h1 class="mt-2">Alterar registros</h1>
       <ol class="breadcrumb mb-2">
         <li class="breadcrumb-item active">@model.title</li>
       </ol>
@@ -21,7 +21,7 @@
                   <div class="col-sm-4 col-xxl-2">
                     <input type="text" name="cliente" class="form-control-plaintext" id="cliente" maxlength="10" required value="@model.cliente" readonly />
                   </div>
-  
+
                   <label for="valor" class="col-sm-2 col-xxl-1 col-form-label required">Valor:</label>
                   <div class="col-sm-4 col-xxl-3">
                     <input type="number" name="valor" class="form-control-plaintext" id="valor" maxlength="10" required value="@model.valor" readonly />
@@ -78,7 +78,6 @@
   var oper = "@model.oper";
 
   window.onload = limpaForm();
-
   //@ Limpa o conteúdo dos campos do formulário
   async function limpaForm() {
 
@@ -105,38 +104,44 @@
     //Coloca o curso no primeiro campo do formulário
     $("#codigo").focus();
   }
-
   //@ Busca os dados de acordo com o ID para serem alterados
-  // async function getDados(idBuscaPar) {
-  //   console.log("[getDados] idBusca", idBuscaPar);
+  async function getDados(idBuscaPar) {
+    console.log("[getDados] idBusca", idBuscaPar);
+    try {
+        const resp = await axios.post("/contas/getDados", {
+            id: idBuscaPar,
+        }, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
 
-  //   try {
-  //     const resp = await axios.post(
-  //       "/contas/getDados", {
-  //         idBusca: idBuscaPar
-  //       }, {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     if (resp.data.status == "ok") {
-  //       $("#id").val(resp.data.registro.id);
-  //       $("#codigo").val(resp.data.registro.codigo);
-  //       $("#descricao").val(resp.data.registro.descricao);
-  //       if (resp.data.registro.ativo) {
-  //         $("#ativo").prop("checked", true);
-  //       } else {
-  //         $("#ativo").prop("checked", false);
-  //       }
+        if (resp.data.status == "ok") {
+          console.log("AQUI CHEGOOOOOOOOOOOOOOOOOO")
+            $("#id").val(resp.data.registro.id);
+            $("#cliente").val(resp.data.registro.cliente);
+            $("#valor").val(resp.data.registro.valor);
+            $("#status").val(resp.data.registro.status);
 
-  //     } else {
-  //       alert("Houve erro ao buscar os dados dos alunos!");
-  //     }
-  //   } catch (error) {
-  //     alert("[view_cadCursos|getDados]Ocorreu um erro inesperado!" + error);
-  //   }
-  // }
+            // Preencha o campo "ativo" com base no valor retornado do banco
+            if (resp.data.registro.status === "Ativo") {
+  $("#select").val("ativo");
+} else if (resp.data.registro.status === "Pendente") {
+  $("#select").val("pendente");
+} else if (resp.data.registro.status === "Inativo") {
+  $("#select").val("inativo");
+}
+
+            console.log("Dados preenchidos com sucesso!");
+        } else {
+            alert("Houve erro ao buscar os dados dos alunos!");
+        }
+    } catch (error) {
+  console.log("[ctlCursos.js|getDados] ERROOOOOOOOOOOO22222222222222222222222222ado",error);
+
+}
+}
+
 
   //@ Valida o formulário antes de salvá-lo
   function validaForm(formDataPar) {
@@ -195,11 +200,11 @@
 
   //@ Habilita form para alteração
   function habilitaForm() {
-    $("#codigo").prop("class", "form-control");
-    $("#codigo").prop("readonly", false);
+    $("#cliente").prop("class", "form-control");
+    $("#cliente").prop("readonly", false);
 
-    $("#descricao").prop("class", "form-control");
-    $("#descricao").prop("readonly", false);
+    $("#valor").prop("class", "form-control");
+    $("#valor").prop("readonly", false);
 
     $("#ativo").prop("disabled", false);
   }

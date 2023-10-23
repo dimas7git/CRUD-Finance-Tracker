@@ -14,7 +14,7 @@ routerApp.get("/", (req, res) => {
 });
 
 routerApp.get("/getAllContas", appConta.getAllContas);
-routerApp.get("/getContasByID", appConta.getContasByID);
+routerApp.post("/getContasByID", appConta.getContasByID);
 routerApp.post("/insertContas", appConta.insertContas);
 routerApp.post("/updateContas", appConta.updateContas);
 routerApp.post("/deleteContas", appConta.deleteContas);

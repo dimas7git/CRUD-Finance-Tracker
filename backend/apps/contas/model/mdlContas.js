@@ -10,7 +10,7 @@ const getAllContas = async () => {
   
   const getContasByID = async (contasID) => {
       return (
-        await db.query("SELECT *FROM contas WHERE id = $1 AND removido = false;",[contasID])
+        await db.query("SELECT *FROM contas WHERE id = $1;",[contasID])
       ).rows;
     };
   

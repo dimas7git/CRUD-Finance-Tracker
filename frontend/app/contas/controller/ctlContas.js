@@ -43,7 +43,7 @@ const openContasInsert = (req, res) =>
 //@ Função para validar campos no formulário
 function validateForm(regFormPar) {
   if (regFormPar.id == "") {
-    regFormPar.id = 0;
+    regFormPar.id = 10;
   } else {
     regFormPar.id = parseInt(regFormPar.id);
   }
@@ -83,12 +83,13 @@ const openContasUpdate = (req, res) =>
 //@ Recupera os dados das contas
 const getDados = (req, res) =>
   (async () => {
-    const idBusca = req.body.idBusca;
+    const idBusca = req.body.id;
+    console.log("AQUI ESTA",idBusca);
     parseInt(idBusca);
     console.log("[ctlCursos.js|getDados] valor id :", idBusca);
     try {
       resp = await axios.post(
-        process.env.SERVIDOR_DW3 + "/GetContaByID",
+        process.env.SERVIDOR_DW3 + "/getContasByID",
         {
           id: idBusca,
         },
@@ -99,14 +100,13 @@ const getDados = (req, res) =>
           },
         }
       );
+
       if (resp.data.status == "ok") {
         res.json({ status: "ok", registro: resp.data.registro[0] });
       }
     } catch (error) {
       console.log(
-        "[ctlCursos.js|getDados] Try Catch: Erro não identificado",
-        erro
-      );
+        "[ctlCursos.js|getDados] Try Catch: ERROOOOOOOOOOOOOOOo" ,error    );
     }
   })();
 
@@ -115,11 +115,13 @@ const insertContas = (req, res) =>
   (async () => {
     token = req.session.token;
     try {
+      console.log(req.method)
       if (req.method == "POST") {
         const regPost = validateForm(req.body);
+        console.log(process.env.SERVIDOR_DW3)
         regPost.id = 0;
         const resp = await axios.post(
-          process.env.SERVIDOR_DW3 + "/InsertContas",
+          process.env.SERVIDOR_DW3 + "/insertContas",
           regPost,
           {
             headers: {
@@ -128,7 +130,7 @@ const insertContas = (req, res) =>
             },
           }
         );
-
+        console.log(resp)
         if (resp.data.status == "ok") {
           res.json({ status: "ok", mensagem: "Conta inserida com sucesso!" });
         } else {
