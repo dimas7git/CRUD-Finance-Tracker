@@ -1,7 +1,22 @@
 @html.extend('layout', function(model) {
   @html.block('content', function(model) {
-    <h1>@model.title</h1>
-    <p>Welcome to @model.title</p>
-    <p>Você está no @model.local</p>
+    <div class="index-header">
+      <h1 class="index-title">Desenvolvimento Web III</h1>
+    </div>
+    <div class="div-pai">
+      <div class="index-div">
+        <p>Este projeto se trata de um CRUD para lidar com dados de contas a receber.</p>
+        <p>O usuário cadastra o nome do Cliente, o valor em dinheiro transação e a situação (se foi <strong>paga</strong> na hora ou se o pagamento ficou <strong>pendente</strong>).</p>    
+        <p>A lógica foi desenvolvida em JavaScript e para a persistência de dados, PostgreSQL foi a tecnologia escolhida.</p>
+        <p>Para acessar os requisitos para o projeto, acesse: <a href="/public/html/requisitos.html">REQUISITOS</a></p>
+        <br>
+        <ul class="lista-autores"><p>Autores:</p>
+          <li><a href="https://github.com/dimas7git" target="_blank">Dimas Ferreira</a></li>
+          <li><a href="https://github.com/sassmatheus" target="_blank">Matheus Sass</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    
   })
 })

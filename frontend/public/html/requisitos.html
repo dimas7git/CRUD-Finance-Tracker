@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabalho para Casa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+        }
+        h1 {
+            font-size: 24px;
+        }
+        h2 {
+            font-size: 20px;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Requisitos do Trabalho de Desenvolvimento Web III</h1>
+    </header>
+    <div class="container">
+        <section>
+            <h2>Orientação inicial</h2>
+            <p>Instruções:</p>
+            <ol>
+                <li>O grupo deverá responder o que se pede neste documento.</li>
+                <li>Todos os grupos começam com 03 pontos e vão perdendo, a medida que não implementarem o que se pede, a pontuação indicada na questão.</li>
+                <li>O software desenvolvido deverá seguir a arquitetura Cliente-Servidor visto nas aulas da disciplina.</li>
+                <li>O grupo deverá criar um repositório no Github e efetuar push de todo o código para ele. Não se esqueça do .gitignore.</li>
+                <li>Não poderá ser usado o repositório criado para acompanhar as aulas.</li>
+                <li>O aluno poderá criar APIs do Back-End em qualquer linguagem de programação.</li>
+                <li>Os dados devem ficar armazenados em um Servidor de Banco de Dados (SGBD).</li>
+                <li>Há necessidade de proteger as rotas das APIs com JWT ou outro mecanismo de token semelhante.</li>
+                <li>Há necessidade de se fazer login para entrar no sistema.</li>
+                <li>O layout do Front-End poderá utilizar o template de administração disponibilizado em sala de aula como poderá implementar o layout do front-end da maneira que achar conveniente.</li>
+                <li>O Front-End em hipótese alguma poderá fazer acesso direto ao SGBD.</li>
+                <li>Este trabalho não haverá continuação.</li>
+            </ol>
+        </section>
+        <section>
+            <h2>Apresentação do Seminário</h2>
+            <p>Estudo de caso:</p>
+            <p>O aluno deverá implementar um conjunto de APIs e interface gráfica para realizar o CRUD referente a uma tabela do módulo financeiro de um sistema ERP. A escolha da tabela ficará a cargo do grupo. Como exemplos têm-se contas a pagar, contas a receber, plano de contas, bancos, agência, conta corrente, etc.</p>
+            <p>Todas as tabelas deverão ter pelo menos os campos ID, Removido, um campo do tipo texto, um campo do tipo data e um campo do tipo decimal.</p>
+            <h3>Regras de negócio</h3>
+            <p>Um programador está implementando o módulo de financeiro no sistema ERP de controle de cooperativas. Ele deverá implementar 5 operações de CRUD de acordo com as realizadas em atividades anteriores e vistas em sala de aula.</p>
+            <p>As operações deverão ser realizadas no formato de APIs e são:</p>
+            <ul>
+                <li>GetAllXXX: retorna todos os campos da tabela. Vai trazer somente os registros que não foram apagados, isto é, aqueles cujo campo removido seja igual a false;</li>
+                <li>GetXXXByID: retorna todos os campos da tabela de acordo com o ID informado. Vai trazer somente o registro que não foi apagado, isto é, aquele cujo campo removido seja igual a false;</li>
+                <li>InsertXXX: insere um novo registro na tabela;</li>
+                <li>UpdateXXX: atualiza um registro na tabela de acordo com o ID informado;</li>
+                <li>DeleteXXX: efetua um soft delete e um registro na tabela de acordo com o ID informado. O registro não é apagado fisicamente, apenas o campo removido é passado para true.</li>
+            </ul>
+            <p>No front-end:</p>
+            <ul>
+                <li>Para cada API do back-end deve ser criada uma respectiva função no front-end que usará a API.</li>
+                <li>Deverá haver controle de sessão de usuário logado.</li>
+            </ul>
+        </section>
+    </div>
+</body>
+</html>

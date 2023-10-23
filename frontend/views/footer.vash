@@ -2,11 +2,9 @@
  <footer class="py-4 bg-light mt-auto">
  <div class="container-fluid px-4">
  <div class="d-flex align-items-center justify-content-between small">
- <div class="text-muted">Copyright &copy; Your Website 2023</div>
+ <div class="text-muted">Copyright &copy; Instituto Federal de São Paulo 2023</div>
  <div>
- <a href="#">Privacy Policy</a>
- &middot;
- <a href="#">Terms &amp; Conditions</a>
+ <a href="https://github.com/dimas7git/projeto_contas"> Repositório</a> <i class="fab fa-github"></i>
  </div>
  </div>
  </div>

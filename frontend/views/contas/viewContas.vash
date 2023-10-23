@@ -1,75 +1,83 @@
 @html.extend('layout', function(model){ @html.block('content', function(model){
 
-  <main>
-    <div class="container-fluid px-4">
-      <h1 class="mt-2">Alterar registros</h1>
-      <ol class="breadcrumb mb-2">
-        <li class="breadcrumb-item active">@model.title</li>
-      </ol>
-      <div class="row">
-        <div class="col-xl-12">
-          <div class="card-header"></div>
-  
-          <div class="card-body">
-            <div class="col-sm-6 col-xxl-12">
-              <form id="form">
-                <div class="mb-1" style="display: none">
-                  <input type="number" name="id" class="form-control" id="id" value="@model.id" />
-                </div>
-                <div class="mb-1 row">
-                  <label for="cliente" class="col-sm-2 col-xxl-1 col-form-label required">Cliente:</label>
-                  <div class="col-sm-4 col-xxl-2">
-                    <input type="text" name="cliente" class="form-control-plaintext" id="cliente" maxlength="10" required value="@model.cliente" readonly />
-                  </div>
+<main>
+  <div class="container-fluid px-4">
+    <h1 class="mt-2">Gerenciamento de registros</h1>
+    <ol class="breadcrumb mb-2">
+      <li class="breadcrumb-item active">Atualização de clientes, valores e situação da conta</li>
+    </ol>
+    <br><br>
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card-header"></div>
 
-                  <label for="valor" class="col-sm-2 col-xxl-1 col-form-label required">Valor:</label>
-                  <div class="col-sm-4 col-xxl-3">
-                    <input type="number" name="valor" class="form-control-plaintext" id="valor" maxlength="10" required value="@model.valor" readonly />
-                  </div>
-  
-                  <label for="status" class="col-sm-2 col-xxl-1 col-form-label required">Situação:</label>
-                  <div class="col-sm-4 col-xxl-3">
-                    <select class="form-select" aria-label="Default select example" id="select">
-                      <option value="pago" @(model.data && model.data.status === 'pago' ? 'selected' : '')>Pago</option>
-                      <option value="pendente" @(model.data && model.data.status === 'pendente' ? 'selected' : '')>Pendente</option>
-                      <option value="cancelado" @(model.data && model.data.status === 'cancelado' ? 'selected' : '')>Cancelado</option>
-                    </select>
-                  </div>
-                  
+        <div class="card-body">
+          <div class="col-sm-6 col-xxl-12">
+            <form id="form">
+              <div class="mb-1" style="display: none">
+                <input type="number" name="id" class="form-control disabled-input" id="id" value="@model.id" />
+              </div>
+              <div class="mb-1 row">
+                <label for="cliente" class="col-sm-2 col-xxl-1 col-form-label required">Cliente:</label>
+                <div class="col-sm-4 col-xxl-2">
+                  <input type="text" name="cliente" class="form-control disabled-input" id="cliente" maxlength="10" required
+                    value="@model.cliente" readonly />
                 </div>
-              </form>
-            </div>
-            <div>
-              <button type="button" class="btn btn-success me-2" onclick="btnSalvar()" id="btnSalvar" hidden>
-                Salvar
-              </button>
-  
-              <button type="button" class="btn btn-warning me-2" onclick="btnAlterar()" id="btnAlterar" hidden>
-                Alterar
-              </button>
-  
-              <button type="button" class="btn btn-warning me-2" onclick="btnSalvarAlteracao()" id="btnSalvarAlteracao" hidden>
-                Salvar Alteração
-              </button>
-  
-              <button type="button" class="btn btn-info me-2" onclick="btnCancelarAlteracao()" id="btnCancelarAlteracao" hidden>
-                Cancelar Alteração
-              </button>
-  
-              <button type="button" class="btn btn-danger" onclick="btnRemover()" id="btnRemover" hidden>
-                Remover
-              </button>
-  
-              <button type="button" class="btn btn-primary" onclick="window.location.href = '/contas'" id="btnFechar">
-                Fechar
-              </button>
-            </div>
+
+                <label for="valor" class="col-sm-2 col-xxl-1 col-form-label required">Valor:</label>
+                <div class="col-sm-4 col-xxl-3">
+                  <input type="number" name="valor" class="form-control disabled-input" id="valor" maxlength="10" required
+                    value="@model.valor" readonly />
+                </div>
+
+                <label for="status" class="col-sm-2 col-xxl-1 col-form-label required">Situação:</label>
+                <div class="col-sm-4 col-xxl-3">
+                  <select class="form-select" aria-label="Default select example" id="select" disabled>
+                    <option value="pago" @(model.data && model.data.status==='pago' ? 'selected' : '' )>Pago</option>
+                    <option value="pendente" @(model.data && model.data.status==='pendente' ? 'selected' : '' )>Pendente
+                    </option>
+                    <option value="cancelado" @(model.data && model.data.status==='cancelado' ? 'selected' : '' )>
+                      Cancelado</option>
+                  </select>
+                </div>
+
+              </div>
+            </form>
+          </div>
+          <br>
+          <div>
+            <button type="button" class="btn btn-success me-2" onclick="btnSalvar()" id="btnSalvar" hidden>
+              Salvar
+            </button>
+
+            <button type="button" class="btn btn-warning me-2" onclick="btnAlterar()" id="btnAlterar" hidden>
+              Alterar
+            </button>
+
+            <button type="button" class="btn btn-warning me-2" onclick="btnSalvarAlteracao()" id="btnSalvarAlteracao"
+              hidden>
+              Salvar Alteração
+            </button>
+
+            <button type="button" class="btn btn-secondary me-2" onclick="btnCancelarAlteracao()" id="btnCancelarAlteracao"
+              hidden>
+              Cancelar Alteração
+            </button>
+
+            <button type="button" class="btn btn-danger" onclick="btnRemover()" id="btnRemover" hidden>
+              Remover
+            </button>
+
+            <button type="button" class="btn btn-primary" onclick="window.location.href = '/contas'" id="btnFechar">
+              Fechar
+            </button>
           </div>
         </div>
       </div>
     </div>
-  </main>
-  
+  </div>
+</main>
+
 
 }) })
 
@@ -81,7 +89,7 @@
   //@ Limpa o conteúdo dos campos do formulário
   async function limpaForm() {
 
-    $("#form").each(function() {
+    $("#form").each(function () {
       this.reset();
     });
 
@@ -108,45 +116,45 @@
   async function getDados(idBuscaPar) {
     console.log("[getDados] idBusca", idBuscaPar);
     try {
-        const resp = await axios.post("/contas/getDados", {
-            id: idBuscaPar,
-        }, {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
+      const resp = await axios.post("/contas/getDados", {
+        id: idBuscaPar,
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-        if (resp.data.status == "ok") {
-          console.log("AQUI CHEGOOOOOOOOOOOOOOOOOO")
-            $("#id").val(resp.data.registro.id);
-            $("#cliente").val(resp.data.registro.cliente);
-            $("#valor").val(resp.data.registro.valor);
-            $("#status").val(resp.data.registro.status);
+      if (resp.data.status == "ok") {
+        console.log("AQUI CHEGOOOOOOOOOOOOOOOOOO")
+        $("#id").val(resp.data.registro.id);
+        $("#cliente").val(resp.data.registro.cliente);
+        $("#valor").val(resp.data.registro.valor);
+        $("#status").val(resp.data.registro.status);
 
-            // Preencha o campo "ativo" com base no valor retornado do banco
-            if (resp.data.registro.status === "Pago") {
-  $("#select").val("pago");
-} else if (resp.data.registro.status === "Pendente") {
-  $("#select").val("pendente");
-} else if (resp.data.registro.status === "Cancelado") {
-  $("#select").val("cancelado");
-}
-
-            console.log("Dados preenchidos com sucesso!");
-        } else {
-            alert("Houve erro ao buscar os dados dos alunos!");
+        // Preencha o campo "ativo" com base no valor retornado do banco
+        if (resp.data.registro.status === "Pago") {
+          $("#select").val("pago");
+        } else if (resp.data.registro.status === "Pendente") {
+          $("#select").val("pendente");
+        } else if (resp.data.registro.status === "Cancelado") {
+          $("#select").val("cancelado");
         }
-    } catch (error) {
-  console.log("[ctlCursos.js|getDados] ERROOOOOOOOOOOO22222222222222222222222222ado",error);
 
-}
-}
+        console.log("Dados preenchidos com sucesso!");
+      } else {
+        alert("Houve erro ao buscar os dados dos alunos!");
+      }
+    } catch (error) {
+      console.log("[ctlCursos.js|getDados] ERROOOOOOOOOOOO22222222222222222222222222ado", error);
+
+    }
+  }
 
 
   //@ Valida o formulário antes de salvá-lo
   function validaForm(formDataPar) {
     var validado = true;
-    $("#form input, #form select").each(function(index) {
+    $("#form input, #form select").each(function (index) {
       var input = $(this);
       if (
         input.attr("type") == "text" &&
@@ -160,13 +168,17 @@
         return false;
       }
     });
- var selectElement = document.getElementById("select");
-  valorSelecionado = selectElement.value;
+    var selectElement = document.getElementById("select");
+    valorSelecionado = selectElement.value;
 
-  valorSelecionado = valorSelecionado.charAt(0).toUpperCase() + valorSelecionado.slice(1);
+    valorSelecionado = valorSelecionado.charAt(0).toUpperCase() + valorSelecionado.slice(1);
 
-     formDataPar.set("status", valorSelecionado);
+    formDataPar.set("status", valorSelecionado);
     formDataPar.set("removido", false);
+
+    if (valorSelecionado.toLowerCase() === "cancelado") {
+      formDataPar.set("removido", true);
+    }
 
     return validado;
   }
@@ -206,15 +218,17 @@
     $("#valor").prop("class", "form-control");
     $("#valor").prop("readonly", false);
 
-    $("#status").prop("disabled", false);
+    $("#select").prop("disabled", false);
   }
 
   //@ Habilita a alteração
   async function btnAlterar() {
     $("#btnSalvarAlteracao").prop("hidden", false);
     $("#btnCancelarAlteracao").prop("hidden", false);
-    $("#btnRemover").prop("hidden", false);
+    $("#btnRemover").prop("hidden", true);
     $("#btnAlterar").prop("hidden", true);
+    $("#btnFechar").prop("hidden", true);
+
 
     habilitaForm();
   }
@@ -256,7 +270,7 @@
 
   //@ Remove curso
   //@ console.log("[view_cadCursos|btnSalvarAlteracao] :", )
-  async function btnRemover() { 
+  async function btnRemover() {
 
     var confirma = confirm("Deseja realmente remover o registro?");
     if (!confirma) {
@@ -285,19 +299,19 @@
   }
 
 
-  $(function() {
+  $(function () {
     $("#rendafamiliar").maskMoney();
   });
 
   async function deleteContas(prontuarioPar) {
     resp = await axios.post(
       "/alunos/DeleteContas", {
-        id: $("#id").val(),
-      }, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+      id: $("#id").val(),
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
     );
 
     if (resp.data.status == "ok") {

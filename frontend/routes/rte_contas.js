@@ -23,6 +23,7 @@ router.get('/', authenticationMiddleware, contasApp.getAllContas);
 router.get('/openContasInsert', authenticationMiddleware, contasApp.openContasInsert);
 router.get('/openContasUpdate/:id', authenticationMiddleware, contasApp.openContasUpdate);
 
+
 /* POST métodos */
 router.post('/openContasInsert', authenticationMiddleware, contasApp.openContasInsert);
 

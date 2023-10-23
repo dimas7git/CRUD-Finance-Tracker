@@ -10,7 +10,7 @@ routerApp.use((req, res, next) => {
 });
 
 routerApp.get("/", (req, res) => {
-  res.send("Olá! DIMASSSS");
+  res.send("Olá!");
 });
 
 routerApp.get("/getAllContas", appConta.getAllContas);
