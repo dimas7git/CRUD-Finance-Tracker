@@ -32,9 +32,9 @@
                 <div class="col-sm-4 col-xxl-3">
 
                   <select class="form-select" aria-label="Default select example" id="status">
-                    <option value="ativo" selected>Ativo</option>
+                    <option value="pago" selected>Pago</option>
                     <option value="pendente">Pendente</option>
-                    <option value="inativo">Inativo</option>
+                    <option value="cancelada">Cancelada</option>
                   </select>
                 </div>
 
@@ -162,10 +162,10 @@
     const selectedOption = selectElement.value;
     if (selectedOption === "pendente") {
       formDataPar.set("status", "Pendente");
-    } else if (selectedOption === "ativo") {
-      formDataPar.set("status", "Ativo");
-    } else if (selectedOption === "inativo") {
-      formDataPar.set("status", "Inativo");
+    } else if (selectedOption === "pago") {
+      formDataPar.set("status", "Pago");
+    } else if (selectedOption === "cancelada") {
+      formDataPar.set("status", "Cancelada");
     }
 
     return validado;

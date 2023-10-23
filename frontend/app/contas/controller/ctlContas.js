@@ -48,7 +48,6 @@ function validateForm(regFormPar) {
     regFormPar.id = parseInt(regFormPar.id);
   }
 
-  regFormPar.ativo = regFormPar.ativo === "true"; //converte para true ou false um check componet
   regFormPar.deleted = regFormPar.deleted === "true"; //converte para true ou false um check componet
 
   return regFormPar;
@@ -166,6 +165,7 @@ const updateContas = (req, res) =>
         if (resp.data.status == "ok") {
           res.json({ status: "ok", mensagem: "Conta atualizada com sucesso!" });
         } else {
+          console.log(resp)
           res.json({ status: "erro", mensagem: "Erro ao atualizar conta!" });
         }
       }

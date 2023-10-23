@@ -30,9 +30,9 @@
                   <label for="status" class="col-sm-2 col-xxl-1 col-form-label required">Situação:</label>
                   <div class="col-sm-4 col-xxl-3">
                     <select class="form-select" aria-label="Default select example" id="select">
-                      <option value="ativo" @(model.data && model.data.status === 'ativo' ? 'selected' : '')>Ativo</option>
+                      <option value="pago" @(model.data && model.data.status === 'pago' ? 'selected' : '')>Pago</option>
                       <option value="pendente" @(model.data && model.data.status === 'pendente' ? 'selected' : '')>Pendente</option>
-                      <option value="inativo" @(model.data && model.data.status === 'inativo' ? 'selected' : '')>Inativo</option>
+                      <option value="cancelado" @(model.data && model.data.status === 'cancelado' ? 'selected' : '')>Cancelado</option>
                     </select>
                   </div>
                   
@@ -124,12 +124,12 @@
             $("#status").val(resp.data.registro.status);
 
             // Preencha o campo "ativo" com base no valor retornado do banco
-            if (resp.data.registro.status === "Ativo") {
-  $("#select").val("ativo");
+            if (resp.data.registro.status === "Pago") {
+  $("#select").val("pago");
 } else if (resp.data.registro.status === "Pendente") {
   $("#select").val("pendente");
-} else if (resp.data.registro.status === "Inativo") {
-  $("#select").val("inativo");
+} else if (resp.data.registro.status === "Cancelado") {
+  $("#select").val("cancelado");
 }
 
             console.log("Dados preenchidos com sucesso!");
@@ -160,13 +160,13 @@
         return false;
       }
     });
+ var selectElement = document.getElementById("select");
+  valorSelecionado = selectElement.value;
 
-    if (formDataPar.get("ativo") == "on") {
-      formDataPar.set("ativo", true);
-    } else {
-      formDataPar.set("ativo", false);
-    }
-    formDataPar.set("deleted", false);
+  valorSelecionado = valorSelecionado.charAt(0).toUpperCase() + valorSelecionado.slice(1);
+
+     formDataPar.set("status", valorSelecionado);
+    formDataPar.set("removido", false);
 
     return validado;
   }
@@ -206,7 +206,7 @@
     $("#valor").prop("class", "form-control");
     $("#valor").prop("readonly", false);
 
-    $("#ativo").prop("disabled", false);
+    $("#status").prop("disabled", false);
   }
 
   //@ Habilita a alteração
