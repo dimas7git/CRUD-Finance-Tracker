@@ -1,12 +1,11 @@
 # Trabalho de Desenvolvimento Web III 
-Este projeto se trata de um CRUD para lidar com dados de contas a receber.
+Este projeto foi desenvolvido para ser submetido à avaliação na disciplina Desenvolvimento Web III.
 
-O usuário cadastra o nome do Cliente, o valor em dinheiro transação e a situação (se foi paga na hora ou se o pagamento ficou pendente).
+A presente aplicação se trata de um CRUD para gerenciar dados financeiros, mais especificamente entrada de receita.
+
+O usuário cadastra o nome do cliente, o valor da transação e a situação (se foi paga na hora ou se o pagamento ficou pendente).
 
 A lógica foi desenvolvida em JavaScript e para a persistência de dados, PostgreSQL foi a tecnologia escolhida.
-
-
-
 
 ## Requisitos para desenvolvimento do projeto
 

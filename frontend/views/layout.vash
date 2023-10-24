@@ -5,8 +5,8 @@
         <!-- Navbar Brand-->
         
         <!-- Sidebar Toggle-->
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
-                class="fas fa-bars"></i></button>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 " id="sidebarToggle" href="#!"><i
+                class="fas fa-bars botao-menu"></i></button>
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
@@ -22,6 +22,8 @@
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
+                    <li>  <a class="dropdown-item" href="#" id="modeToggle">Alterar tema</a>
+</li>
                     <li><a class="dropdown-item" href="/Logout">Logout</a></li>
                 </ul>
             </li>
@@ -53,7 +55,7 @@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Bem vindo: @model.userName</div>
+                    <div class="small">Logado como: @model.userName</div>
                 </div>
             </nav>
         </div>
@@ -69,7 +71,37 @@
 
         <!-----Fim Páginas filhas ----->
     </div>
-
+    <script>
+        // Função para alternar entre os modos
+        function toggleMode(event) {
+          event.preventDefault(); // Evitar que o link recarregue a página
+          const navTop = document.querySelector(".sb-topnav");
+          const navSidenav = document.querySelector("#sidenavAccordion");
+          if (navTop.classList.contains("navbar-dark")) {
+            // Mudar para o modo light
+            navTop.classList.remove("navbar-dark", "bg-dark");
+            navTop.classList.add("navbar-light", "bg-light");
+            navSidenav.classList.add("sb-sidenav-light");
+            localStorage.setItem('mode', 'light'); // Armazenar a seleção do modo
+          } else {
+            // Mudar para o modo dark
+            navTop.classList.remove("navbar-light", "bg-light");
+            navTop.classList.add("navbar-dark", "bg-dark");
+            navSidenav.classList.remove("sb-sidenav-light");
+            localStorage.setItem('mode', 'dark'); // Armazenar a seleção do modo
+          }
+        }
+    
+        // Adicionar um evento de clique à âncora
+        const modeToggleLink = document.getElementById("modeToggle");
+        modeToggleLink.addEventListener("click", toggleMode);
+    
+        // Verificar a seleção do modo ao carregar a página
+        const savedMode = localStorage.getItem('mode');
+        if (savedMode === 'light') {
+          toggleMode({ preventDefault: () => {} }); // Simular um clique para aplicar o modo light
+        }
+      </script>
     
     <script src="/js/5.3.0/popper.js_2.11.8_popper.min.js" ></script>
     <script src="/js/5.3.0/bootstrap.min.js"></script>

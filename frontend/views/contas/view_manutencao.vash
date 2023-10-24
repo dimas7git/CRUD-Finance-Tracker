@@ -6,7 +6,8 @@
 <main>
 
     <div class="container-fluid px-4">
-        <h1 class="mt-4" style="text-align: center;">@model.title</h1>
+        <h1 class="mt-4" >@model.title</h1>
+        <hr>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item active">Crie, consulte, atualize ou exclua registros</li>
         </ol>
@@ -15,7 +16,7 @@
                 <div class="card mb-4">
                     <div class="mt-2 mb-2 btn-cadastro-div">
 
-                        <button type="button" class="btn btn-primary btn-centralizado"
+                        <button type="button" class="btn btn-secondary btn-centralizado"
                             onclick="window.location.href = '/contas/openContasInsert'">Adicionar registro</button>
                     </div>
                     <div class="card-header">
@@ -38,7 +39,7 @@
                                     <td>@registro.cliente</td>
                                     <td>@registro.valor</td>
                                     <td>@registro.status</td>
-                                    <td><a href="/contas/openContasUpdate/@registro.id" class="btn btn-primary btn-sm"><i
+                                    <td><a href="/contas/openContasUpdate/@registro.id" class="btn btn-secondary btn-sm"><i
                                                 class="fa fa-magnifying-glass"></i>  Gerenciar</a></td>
                                 </tr>
                                 })

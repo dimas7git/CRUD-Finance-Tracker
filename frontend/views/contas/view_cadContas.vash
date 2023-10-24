@@ -2,9 +2,10 @@
 
 <main>
   <div class="container-fluid px-4">
-    <h1 class="mt-2">@model.title</h1>
+    <h1 class="mt-2">Cadastro de contas</h1>
+    <hr>
     <ol class="breadcrumb mb-2">
-      <li class="breadcrumb-item active">@model.title</li>
+      <li class="breadcrumb-item active">Registre contas recebidas ou a receber</li>
     </ol>
     <div class="row">
       <div class="col-xl-12">
@@ -13,13 +14,14 @@
         <div class="card-body">
           <div class="col-sm-6 col-xxl-12">
             <form id="form">
+            <br>
               <div class="mb-1" style="display: none">
                 <input type="number" name="id" class="form-control" id="id" />
               </div>
               <div class="mb-1 row ">
                 <label for="cliente" class="col-sm-2 col-xxl-1 col-form-label required">Cliente:</label>
                 <div class="col-sm-4 col-xxl-2">
-                  <input type="text" name="cliente" class="form-control-plaintext" id="cliente" maxlength="10" required
+                  <input type="text" name="cliente" class="form-control-plaintext" id="cliente" maxlength="30" required
                     readonly />
                 </div>
 
@@ -30,16 +32,16 @@
                 </div>
                 <label for="status" class="col-sm-2 col-xxl-1 col-form-label required">Situação: </label>
                 <div class="col-sm-4 col-xxl-3">
-
+                
                   <select class="form-select" aria-label="Default select example" id="status">
-                    <option value="pago" selected>Pago</option>
+                    <option value="" selected hidden>Selecione</option>
+                    <option value="pago">Pago</option>
                     <option value="pendente">Pendente</option>
-                    <option value="cancelada">Cancelada</option>
                   </select>
                 </div>
 
               </div>
-
+<br>
             </form>
 
           </div>
