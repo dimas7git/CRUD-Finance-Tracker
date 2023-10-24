@@ -9,7 +9,7 @@
         <p>Este projeto foi desenvolvido para ser submetido à avaliação na disciplina Desenvolvimento Web III.</p>
         <p>A presente aplicação se trata de um CRUD para gerenciar dados financeiros, mais especificamente entrada de receita.</p>
         <p>O usuário cadastra o nome do cliente, o valor da transação e a situação (se foi <strong>paga</strong> na hora ou se o pagamento ficou <strong>pendente</strong>).</p>    
-        <p>A lógica foi desenvolvida em JavaScript e para a persistência de dados, PostgreSQL foi a tecnologia escolhida.</p>
+        <p>A lógica foi desenvolvida em JavaScript e, para a persistência de dados, o PostgreSQL foi a tecnologia escolhida.</p>
         <p>Para acessar os requisitos para o projeto, acesse: <a href="https://github.com/dimas7git/projeto_contas#readme" target="_blank">README.md</a></p>
         <br>
         <ul class="lista-autores"><p>Autores:</p>

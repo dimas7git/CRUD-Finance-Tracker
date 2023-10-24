@@ -5,7 +5,7 @@ A presente aplicação se trata de um CRUD para gerenciar dados financeiros, mai
 
 O usuário cadastra o nome do cliente, o valor da transação e a situação (se foi paga na hora ou se o pagamento ficou pendente).
 
-A lógica foi desenvolvida em JavaScript e para a persistência de dados, PostgreSQL foi a tecnologia escolhida.
+A lógica foi desenvolvida em JavaScript e, para a persistência de dados, o PostgreSQL foi a tecnologia escolhida.
 
 ## Requisitos para desenvolvimento do projeto
 
