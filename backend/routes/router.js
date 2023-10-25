@@ -13,11 +13,11 @@ routerApp.get("/", (req, res) => {
   res.send("Olá!");
 });
 
-routerApp.get("/getAllContas", appConta.getAllContas);
-routerApp.post("/getContasByID", appConta.getContasByID);
-routerApp.post("/insertContas", appConta.insertContas);
-routerApp.post("/updateContas", appConta.updateContas);
-routerApp.post("/deleteContas", appConta.deleteContas);
+routerApp.get("/getAllContas", appLogin.AutenticaJWT,appConta.getAllContas);
+routerApp.post("/getContasByID", appLogin.AutenticaJWT, appConta.getContasByID);
+routerApp.post("/insertContas", appLogin.AutenticaJWT, appConta.insertContas);
+routerApp.post("/updateContas", appLogin.AutenticaJWT, appConta.updateContas);
+routerApp.post("/deleteContas", appLogin.AutenticaJWT, appConta.deleteContas);
 
 routerApp.post("/Login", appLogin.Login);
 routerApp.post("/Logout", appLogin.Logout);

@@ -105,7 +105,7 @@ const getDados = (req, res) =>
       }
     } catch (error) {
       console.log(
-        "[ctlCursos.js|getDados] Try Catch: ERROOOOOOOOOOOOOOOo" ,error    );
+        "[ctlCursos.js|getDados] Try Catch:" ,error    );
     }
   })();
 
